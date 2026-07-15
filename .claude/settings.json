@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm install react-router-dom appwrite framer-motion recharts canvas-confetti lucide-react @google/genai)",
+      "Skill(dataviz)",
+      "Skill(dataviz:*)",
+      "PowerShell(node \"C:\\\\Users\\\\hp\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\bundled-skills\\\\2.1.207\\\\48aace8767e2178f76de538504229b3d\\\\dataviz\\\\scripts\\\\validate_palette.js\" \"#6366F1,#22C55E,#F59E0B,#38BDF8,#EC4899,#F97316\" --mode dark --surface \"#141B2D\")",
+      "PowerShell(node \"C:\\\\Users\\\\hp\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\bundled-skills\\\\2.1.207\\\\48aace8767e2178f76de538504229b3d\\\\dataviz\\\\scripts\\\\validate_palette.js\" \"#6366F1,#16A34A,#D97706,#0EA5E9,#EC4899,#EA580C\" --mode dark --surface \"#141B2D\")",
+      "PowerShell(node \"C:\\\\Users\\\\hp\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\bundled-skills\\\\2.1.207\\\\48aace8767e2178f76de538504229b3d\\\\dataviz\\\\scripts\\\\validate_palette.js\" \"#6366F1,#16A34A,#D97706,#0284C7,#EC4899,#EA580C\" --mode dark --surface \"#141B2D\")",
+      "PowerShell(node -e \"const a=require\\('appwrite'\\); console.log\\(Object.keys\\(a\\).join\\(', '\\)\\); console.log\\('version', require\\('appwrite/package.json'\\).version\\)\")",
+      "PowerShell(node -e \"const {Databases, Account} = require\\('appwrite'\\); console.log\\('listDocuments' in Databases.prototype, Databases.prototype.listDocuments.length\\); console.log\\('createDocument', Databases.prototype.createDocument.length\\); console.log\\(Object.getOwnPropertyNames\\(Account.prototype\\).filter\\(n=>/session|create|get/i.test\\(n\\)\\).join\\(', '\\)\\)\")",
+      "PowerShell(npm run build 2>&1)",
+      "PowerShell(npx eslint . 2>&1)",
+      "PowerShell(npm run dev)",
+      "PowerShell(@\\(\"/src/routes/AppRoutes.jsx\",\"/src/contexts/AppDataContext.jsx\",\"/src/gemini/aiService.js\",\"/src/appwrite/client.js\",\"/src/pages/Dashboard.jsx\",\"/src/pages/Statistics.jsx\"\\) | ForEach-Object { try { $x = Invoke-WebRequest -Uri \"http://localhost:5173$_\" -UseBasicParsing; Write-Output \"$\\($x.StatusCode\\)  $_\" } catch { Write-Output \"FAIL  $_  $\\($_.Exception.Message\\)\" } })",
+      "PowerShell(npm install -D node-appwrite 2>&1)",
+      "PowerShell(node -e \"const {Databases}=require\\('node-appwrite'\\); console.log\\('v', require\\('node-appwrite/package.json'\\).version\\); const p=Databases.prototype; ['create','createCollection','createStringAttribute','createIntegerAttribute','createIndex'].forEach\\(m=>console.log\\(m, p[m].length, p[m].toString\\(\\).split\\('\\\\n'\\)[0]\\)\\)\")",
+      "PowerShell(node -e \"const {Databases}=require\\('node-appwrite'\\); const p=Databases.prototype; ['create','createCollection','createStringAttribute','createIntegerAttribute','createFloatAttribute','createBooleanAttribute','createIndex'].forEach\\(m=>console.log\\(m, '| arity', p[m].length, '|', p[m].toString\\(\\).split\\('{'\\)[0].trim\\(\\)\\)\\)\")",
+      "PowerShell(npm run lint 2>&1)",
+      "PowerShell(npm run schema 2>&1)",
+      "PowerShell(npm run schema > $null 2>&1; Write-Output \"schema exit: $LASTEXITCODE\"; npm run schema -- --md 2>&1 | Select-Object -Skip 3 -First 12; npx eslint . 2>&1 | Select-Object -Last 3; if \\($?\\) { Write-Output \"LINT CLEAN\" }; npm run build 2>&1 | Select-Object -Last 1)",
+      "PowerShell(node scripts/print-schema.mjs --md)",
+      "PowerShell($c = Get-Content README.md -Raw -Encoding UTF8; $bad = [regex]::Matches\\($c, 'Â.|â€.'\\); Write-Output \"mojibake matches: $\\($bad.Count\\)\"; \\($bad | ForEach-Object { $_.Value } | Group-Object | Select-Object -First 8 Name, Count | Format-Table -AutoSize | Out-String\\))",
+      "PowerShell($text = [System.IO.File]::ReadAllText\\(\"README.md\", [System.Text.Encoding]::UTF8\\); $bytes = [System.Text.Encoding]::GetEncoding\\(1252\\).GetBytes\\($text\\); $fixed = [System.Text.Encoding]::UTF8.GetString\\($bytes\\); $fixed = $fixed -replace \"\\(?m\\)^\\(### Indexes\\)\", \"`r`n`$1\"; $utf8NoBom = New-Object System.Text.UTF8Encoding\\($false\\); [System.IO.File]::WriteAllText\\(\"README.md\", $fixed, $utf8NoBom\\); $c = [System.IO.File]::ReadAllText\\(\"README.md\", [System.Text.Encoding]::UTF8\\); Write-Output \"remaining mojibake: $\\([regex]::Matches\\($c,'Â.|â€.'\\).Count\\)\")",
+      "PowerShell(npm run schema > $null 2>&1; Write-Output \"schema exit: $LASTEXITCODE\"; npx eslint . 2>&1 | Select-Object -Last 2; if \\($?\\) { Write-Output \"LINT CLEAN\" }; npm run build 2>&1 | Select-Object -Last 1; $c = [System.IO.File]::ReadAllText\\(\"README.md\",[System.Text.Encoding]::UTF8\\); Write-Output \"mojibake: $\\([regex]::Matches\\($c,'Â.|â€.|�'\\).Count\\)\")",
+      "PowerShell(npm run setup:appwrite 2>&1)",
+      "PowerShell(node \"C:\\\\Users\\\\hp\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--work-DSEU-Habit-Incharge\\\\07b8c3cd-4d09-48f6-9edb-50667a19eaaf\\\\scratchpad\\\\smoke.mjs\")",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\hp\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--work-DSEU-Habit-Incharge\\\\07b8c3cd-4d09-48f6-9edb-50667a19eaaf\\\\scratchpad\\\\smoke.mjs\" \".\\\\_smoke.mjs\")",
+      "PowerShell(node .\\\\_smoke.mjs)",
+      "PowerShell(npx eslint . 2>&1 | Select-Object -Last 2; if \\($?\\) { Write-Output \"LINT CLEAN\" }; npm run build 2>&1 | Select-Object -Last 1; npm run schema > $null 2>&1; Write-Output \"schema exit: $LASTEXITCODE\")",
+      "Bash(node -e ' *)",
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:5173/\" -UseBasicParsing -TimeoutSec 3; Write-Output \"dev server: $\\($r.StatusCode\\)\" } catch { Write-Output \"dev server not running\" })"
+    ]
+  }
+}
