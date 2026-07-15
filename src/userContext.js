@@ -25,10 +25,14 @@ export const ME = {
    * These drive what tasks you get.
    */
   goals: [
-    "Ship a real side project I'm not embarrassed to show people",
-    "Get consistent at the gym — 4x a week, not 4x a month",
-    "Read more books, scroll less",
-    "Get genuinely good at system design",
+    "I want to make a routine which i do everyday that consist of healthy habits.",
+    "I do home workouts, the push pull leg split with no equipments just bodyweight stuff 6 times a week",
+    "i am trying to read meditations by marcus aurellius. i want to built a habit to read everyday",
+    "I am learning deployement from a 5.5 hours long video. a little bit everyday",
+    "i want to start waking up early, like 6am or 6.30am. and also get to bed early. basically i want to build healthy sleeping schedule",
+    "i work at dseu university as a front end develepor, my working hours are 9.30-5.30 and it takes 45 minutes for me to reach the office from home and vice versa.  workind days are monday to friday",
+    "i am also in a relationship with a beatuful girlfriend and lately i have been upsetting her alot so i want to do stuff for her here and there. not everyday, just something once or twice a week to get back on track",
+    "i also want to focus on myself, i want to journal everyday so that i dont feel overwhelmed with stuff that is inside.",
   ],
 
   /**
@@ -37,12 +41,12 @@ export const ME = {
    * put here, the better they get.
    */
   iLike: [
-    "Anime (Vinland Saga, Frieren, Steins;Gate)",
-    "Minecraft — especially medieval builds",
-    "Football, Real Madrid",
-    "Lo-fi and phonk while coding",
-    "Sci-fi books and films",
-    "Good coffee",
+    "I like to watch youtube video, kingwoolsgames, football videos, gaming videos and other cool stuff",
+    "I dont game regularly but i want to, cant find a time for it, i want to batman arkham games from start to end.",
+    "i'd like to go outside for a 30 mins walk with bhanu or nikhil( my friends) or sometimes alone when they are not free",
+    "watching a good movie once a week, mostly on saturdays and sundays, other days, i'd be working",
+    "eat something good, maggi, egg omlette, snacks and stuff",
+    "watching reels, not for long but a few minutes are fine",
   ],
 
   /**
@@ -50,13 +54,14 @@ export const ME = {
    * around your failure modes, and to know what to call you out on.
    */
   iStruggleWith: [
-    "Starting. Once I'm 10 minutes in I'm fine.",
-    "Doomscrolling in bed instead of sleeping",
+    "Lost myself to a relationshup. trying to rebuild my routine as well as myself. she is still with me but i have to have a routine so i dont feel empty when she is not around.",
+    "delaying sleep",
     "Going too hard for 3 days then quitting for 2 weeks",
   ],
 
   /** Roughly how your day is shaped. Keeps tasks realistic. */
-  myDay: "Free mornings, college/work most afternoons, evenings usually open.",
+  myDay:
+    "Early mornings. 9.30-5.30pm work. saturdays and sundays off. a cute girlfriend. two friends to hangout with.",
 
   /**
    * How hard should the AI be on you when you slip?

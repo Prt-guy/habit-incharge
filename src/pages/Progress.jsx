@@ -1,9 +1,10 @@
-import { useMemo } from "react";
-import { motion } from "framer-motion";
+import { useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Flame, Trophy, Check, X, CheckCircle2 } from "lucide-react";
 import { useDay } from "../contexts/DayContext";
-import { lastNDayKeys, formatShortDate, todayKey } from "../utils/date";
+import { formatShortDate, todayKey } from "../utils/date";
 import { DAY_SUCCESS_THRESHOLD } from "../userContext";
+import CalendarMonth from "../components/CalendarMonth";
 
 function Stat({ icon: Icon, label, value, tone }) {
   const tones = {
@@ -28,6 +29,7 @@ function Stat({ icon: Icon, label, value, tone }) {
 
 export default function Progress() {
   const { progress, history, loading } = useDay();
+  const [selectedKey, setSelectedKey] = useState(() => todayKey());
 
   const byDay = useMemo(() => {
     const map = {};
@@ -35,8 +37,7 @@ export default function Progress() {
     return map;
   }, [history]);
 
-  const grid = useMemo(() => lastNDayKeys(70), []);
-  const today = todayKey();
+  const selectedDay = selectedKey ? byDay[selectedKey] : null;
 
   if (loading) {
     return (
@@ -90,53 +91,72 @@ export default function Progress() {
         </p>
       </section>
 
-      {/* Ten weeks of circles */}
+      {/* Calendar */}
       <section className="rounded-[2rem] border border-line bg-card p-5 md:p-6">
-        <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
-          Last 10 weeks
-        </p>
-        <div className="grid grid-cols-10 gap-2 md:gap-2.5">
-          {grid.map((key) => {
-            const d = byDay[key];
-            const isToday = key === today;
-            let cls = "bg-ink/6";
-            if (d?.status === "done") cls = "bg-secondary";
-            else if (d?.status === "missed") cls = "bg-danger/75";
-            else if (d?.status === "pending") cls = "bg-primary/50";
-
-            return (
-              <div
-                key={key}
-                title={
-                  d
-                    ? `${formatShortDate(key)}: ${d.completedCount}/${d.totalCount} — ${d.status}`
-                    : formatShortDate(key)
-                }
-                className={`aspect-square rounded-full ${cls}`}
-                style={
-                  isToday
-                    ? { outline: "2px solid var(--color-ink)", outlineOffset: "2px" }
-                    : undefined
-                }
-              />
-            );
-          })}
-        </div>
-        <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-[11px] text-muted">
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-secondary" /> Done
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-danger/75" /> Missed
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-primary/50" /> In progress
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-ink/6" /> Nothing
-          </span>
-        </div>
+        <CalendarMonth byDay={byDay} selected={selectedKey} onSelect={setSelectedKey} />
       </section>
+
+      {/* Selected day's detail */}
+      <AnimatePresence mode="wait">
+        {selectedDay && (
+          <motion.section
+            key={selectedDay.dateKey}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className="rounded-[1.75rem] border border-line bg-card-2 p-5"
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <div>
+                <p className="font-serif text-lg font-medium text-ink">
+                  {formatShortDate(selectedDay.dateKey)}
+                </p>
+                <p className="text-xs capitalize text-muted">
+                  {selectedDay.status} · {selectedDay.completedCount}/{selectedDay.totalCount} done
+                </p>
+              </div>
+              <span
+                className={`grid h-9 w-9 place-items-center rounded-full ${
+                  selectedDay.status === "done"
+                    ? "bg-secondary-soft text-secondary"
+                    : selectedDay.status === "missed"
+                      ? "bg-danger-soft text-danger"
+                      : "bg-primary-soft text-primary"
+                }`}
+              >
+                {selectedDay.status === "done" ? (
+                  <CheckCircle2 size={16} />
+                ) : selectedDay.status === "missed" ? (
+                  <X size={16} />
+                ) : (
+                  <Flame size={16} />
+                )}
+              </span>
+            </div>
+            <div className="space-y-1.5">
+              {(selectedDay.tasks || []).map((t) => (
+                <div key={t.id} className="flex items-center gap-2.5 rounded-full bg-card px-3.5 py-2">
+                  <span
+                    className={`grid h-5 w-5 shrink-0 place-items-center rounded-full ${
+                      t.completed ? "bg-secondary text-bg" : "bg-ink/10 text-transparent"
+                    }`}
+                  >
+                    <Check size={12} strokeWidth={3} />
+                  </span>
+                  <span
+                    className={`truncate text-sm ${
+                      t.completed ? "text-ink-2" : "text-muted line-through decoration-muted/50"
+                    }`}
+                  >
+                    {t.title}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
 
       {/* Recent days */}
       <section>
@@ -150,9 +170,10 @@ export default function Progress() {
         ) : (
           <div className="space-y-2.5">
             {history.slice(0, 14).map((d) => (
-              <div
+              <button
                 key={d.$id}
-                className="flex items-center gap-3.5 rounded-full border border-line bg-card py-2.5 pl-2.5 pr-5"
+                onClick={() => setSelectedKey(d.dateKey)}
+                className="flex w-full items-center gap-3.5 rounded-full border border-line bg-card py-2.5 pl-2.5 pr-5 text-left transition-colors active:bg-card-2"
               >
                 <span
                   className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${
@@ -179,7 +200,7 @@ export default function Progress() {
                   {d.completedCount}
                   <span className="text-sm text-muted">/{d.totalCount}</span>
                 </p>
-              </div>
+              </button>
             ))}
           </div>
         )}
