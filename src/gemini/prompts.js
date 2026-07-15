@@ -108,8 +108,12 @@ Return JSON:
   },
 
   /**
-   * Reward for one finished task. Size must track `weight` — a weight-1 task
-   * gets a small nod, a weight-5 gets something real.
+   * Reward for one finished task.
+   *
+   * A reward is EARNED PERMISSION TO DO SOMETHING THEY ENJOY — pulled from
+   * their "WHAT THEY ENJOY" list. Not a quote, not a fact, not a lyric, not a
+   * fun fact. An actual activity or treat they can go and do. The weight sets
+   * how big the indulgence is.
    */
   reward({ task, progress, recentRewards = [], completedToday, totalToday }) {
     return {
@@ -124,24 +128,34 @@ They just finished this task:
 - Weight: ${task.weight}/5
 That's ${completedToday} of ${totalToday} done today.
 
-Rewards you have already given recently — DO NOT repeat these, not even a variation:
+Rewards you've handed out recently — DO NOT repeat these, pick a different activity:
 ${recentRewards.length ? recentRewards.map((r) => `- ${r}`).join("\n") : "(none yet)"}
 
-Pay them out. The reward must be PROPORTIONAL to the weight:
-- weight 1-2  -> tier "small": a line of recognition, a fact, a lyric, a small nod. Cheap but genuine.
-- weight 3    -> tier "solid": something they'd actually enjoy — a specific track, a scene, a quote from something they love.
-- weight 4    -> tier "big": a real indulgence. A concrete thing to go do, watch, build, or listen to tonight.
-- weight 5    -> tier "epic": go all out. Make it feel earned and memorable.
+Reward them by GRANTING them one thing they enjoy DOING, taken from their
+"WHAT THEY ENJOY" list. It is permission + a nudge to actually go do it —
+"You've earned X, go do it." Never a quote, a fact, a lyric, or a pep talk.
+An activity or a treat they can act on.
 
-Build it out of what they enjoy — name actual titles, characters, teams, builds, tracks.
-A generic "great job, take a break" is a failure. Be specific enough that they could
-act on it in the next hour.
+Match the size of the reward to the weight, and use these tiers:
+- weight 1-2  -> tier "small": a quick hit. A few reels, one short YouTube video, a snack.
+- weight 3    -> tier "solid": a proper break. 20-30 min of YouTube/gaming, a good snack (maggi, an omelette), a short walk.
+- weight 4    -> tier "big": a real indulgence. A solid Batman Arkham session, a walk with Bhanu or Nikhil, a proper meal.
+- weight 5    -> tier "epic": go all out. A movie night, a long gaming session, something that feels genuinely earned.
+
+Rules:
+- Pick from THEIR list — name the actual thing (Batman Arkham, KingWoolsGames, maggi,
+  a walk with Bhanu, a movie). Generic "take a break" is a failure.
+- Respect their reality: movies land best on weekends; gaming is something they want
+  more of, so granting the TIME for it is itself the reward.
+- Don't hand out something that fights their goals — no "stay up late", nothing that
+  wrecks the early-sleep habit they're building. Reels are fine small, but sparingly.
+- One reward per task. Keep it to something they can actually do today/tonight.
 
 Return JSON:
 {
   "tier": "small|solid|big|epic",
-  "title": "the reward's headline — short",
-  "body": "the reward itself, 1-3 sentences, specific and personal",
+  "title": "short headline naming the activity, e.g. 'Batman, earned' or 'Movie night unlocked'",
+  "body": "1-2 sentences telling them what they've earned and to go do it, specific and personal",
   "line": "one sentence of congratulation, in your voice"
 }`,
     };

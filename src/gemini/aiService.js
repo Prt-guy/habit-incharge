@@ -31,13 +31,12 @@ const fallback = {
     };
   },
   reward(task) {
+    // No AI: still grant an actual activity, pulled straight from their list.
+    const like = ME.iLike.length ? pick(ME.iLike) : "something you enjoy";
     return {
       tier: tierForWeight(task.weight),
       title: "Earned",
-      body: pick([
-        `Go do something you actually like for a bit. You've earned the break.`,
-        `That's ${task.weight}/5 worth of work done. Take the win.`,
-      ]),
+      body: `You've earned it — go do this: ${like}. That's ${task.weight}/5 of work banked.`,
       line: `"${task.title}" — done.`,
     };
   },

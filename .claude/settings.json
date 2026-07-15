@@ -29,7 +29,9 @@
       "PowerShell(node .\\\\_smoke.mjs)",
       "PowerShell(npx eslint . 2>&1 | Select-Object -Last 2; if \\($?\\) { Write-Output \"LINT CLEAN\" }; npm run build 2>&1 | Select-Object -Last 1; npm run schema > $null 2>&1; Write-Output \"schema exit: $LASTEXITCODE\")",
       "Bash(node -e ' *)",
-      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:5173/\" -UseBasicParsing -TimeoutSec 3; Write-Output \"dev server: $\\($r.StatusCode\\)\" } catch { Write-Output \"dev server not running\" })"
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:5173/\" -UseBasicParsing -TimeoutSec 3; Write-Output \"dev server: $\\($r.StatusCode\\)\" } catch { Write-Output \"dev server not running\" })",
+      "PowerShell(node _inspect.mjs)",
+      "PowerShell(node _inspect2.mjs)"
     ]
   }
 }

@@ -7,6 +7,18 @@ function decorate(doc) {
   return { ...doc, tasks: parseJson(doc.tasks_json, []) };
 }
 
+/**
+ * Deterministic document id for a day. This is what makes `create` race-safe:
+ * "check if today exists, then create" is not atomic across two boot() calls
+ * (two tabs, or a reload firing while the first request is still in flight),
+ * so both can see nothing and both create. Appwrite enforces `$id` uniqueness
+ * atomically, so giving every day a fixed id turns that race into a 409 for
+ * whoever loses it, instead of a silent duplicate.
+ */
+function docId(dateKey) {
+  return `day_${dateKey.replace(/-/g, "")}`;
+}
+
 export const dayService = {
   decorate,
 
@@ -29,21 +41,39 @@ export const dayService = {
     return rows.map(decorate);
   },
 
-  /** Create the day document once the AI has produced its tasks. */
+  /**
+   * Create the day document once the AI has produced its tasks.
+   *
+   * Idempotent: if another boot() already created today (see docId above),
+   * this catches the 409 and hands back their document instead of creating a
+   * second one.
+   */
   async create(dateKey, { tasks, greeting, verdict = "" }) {
-    return decorate(
-      await db.create("days", {
-        ownerId: OWNER_ID,
-        dateKey,
-        tasks_json: toJson(tasks),
-        completedCount: 0,
-        totalCount: tasks.length,
-        status: "pending",
-        greeting,
-        verdict,
-        createdAt: new Date().toISOString(),
-      })
-    );
+    try {
+      return decorate(
+        await db.create(
+          "days",
+          {
+            ownerId: OWNER_ID,
+            dateKey,
+            tasks_json: toJson(tasks),
+            completedCount: 0,
+            totalCount: tasks.length,
+            status: "pending",
+            greeting,
+            verdict,
+            createdAt: new Date().toISOString(),
+          },
+          docId(dateKey)
+        )
+      );
+    } catch (err) {
+      if (err?.code === 409) {
+        const existing = await this.getDay(dateKey);
+        if (existing) return existing;
+      }
+      throw err;
+    }
   },
 
   /** Persist the task list after a completion, keeping completedCount in sync. */

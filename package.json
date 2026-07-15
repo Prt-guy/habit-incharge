@@ -11,7 +11,8 @@
     "schema": "node scripts/print-schema.mjs",
     "schema:md": "node scripts/print-schema.mjs --md",
     "setup:appwrite": "node scripts/setupDatabase.js",
-    "verify:appwrite": "node scripts/verify-schema.mjs"
+    "verify:appwrite": "node scripts/verify-schema.mjs",
+    "reset:data": "node scripts/reset-data.mjs"
   },
   "dependencies": {
     "@google/genai": "^2.11.0",

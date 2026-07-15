@@ -146,7 +146,7 @@ export default function Progress() {
                   </span>
                   <span
                     className={`truncate text-sm ${
-                      t.completed ? "text-ink-2" : "text-muted line-through decoration-muted/50"
+                      t.completed ? "text-muted line-through decoration-muted/50" : "text-ink-2"
                     }`}
                   >
                     {t.title}
