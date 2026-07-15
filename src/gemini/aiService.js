@@ -1,6 +1,6 @@
 import { generateText, generateJson, geminiAvailable } from "./client";
 import { prompts } from "./prompts";
-import { ME, TASKS_PER_DAY, DAY_SUCCESS_THRESHOLD } from "../userContext";
+import { ME, TARGET_TASKS, MIN_TASKS, MAX_TASKS, dayThreshold } from "../userContext";
 
 /** Tier a reward lands in, given the task's weight. Weight is the contract. */
 export function tierForWeight(weight) {
@@ -23,7 +23,7 @@ const fallback = {
     const goals = ME.goals.length ? ME.goals : ["Make progress on something that matters"];
     return {
       greeting: "No AI today, so here's a plain list. Do them anyway.",
-      tasks: Array.from({ length: TASKS_PER_DAY }, (_, i) => ({
+      tasks: Array.from({ length: TARGET_TASKS }, (_, i) => ({
         title: `Work on: ${goals[i % goals.length]}`,
         detail: "Set a 25-minute timer and start. That's the whole task.",
         weight: (i % 5) + 1,
@@ -41,19 +41,23 @@ const fallback = {
     };
   },
   verdict(day) {
-    const hit = day.completedCount >= DAY_SUCCESS_THRESHOLD;
+    const hit = day.completedCount >= dayThreshold(day.totalCount);
     return hit
       ? `You hit ${day.completedCount}/${day.totalCount} yesterday. That's the bar. Do it again.`
       : `${day.completedCount}/${day.totalCount} yesterday. That's a miss. You know it. Start with the first task today and don't negotiate.`;
   },
 };
 
-/** Normalize whatever the model returns into exactly TASKS_PER_DAY sane tasks. */
+/**
+ * Normalize whatever the model returns into a sane task list. The AI chooses
+ * the count, but we clamp it to [MIN_TASKS, MAX_TASKS] so a bad response can't
+ * hand back zero tasks or thirty.
+ */
 function normalizeTasks(raw) {
   const list = Array.isArray(raw?.tasks) ? raw.tasks : [];
   const tasks = list
     .filter((t) => t && typeof t.title === "string" && t.title.trim())
-    .slice(0, TASKS_PER_DAY)
+    .slice(0, MAX_TASKS)
     .map((t, i) => ({
       id: `t${i}`,
       title: String(t.title).trim(),
@@ -63,13 +67,15 @@ function normalizeTasks(raw) {
       completedAt: "",
       reward: null,
     }));
-  return tasks.length ? tasks : null;
+  // Below the floor (or empty) is treated as a failed response — the caller
+  // falls back to a locally-built day rather than shipping a too-thin one.
+  return tasks.length >= MIN_TASKS ? tasks : null;
 }
 
 export const aiService = {
   available: geminiAvailable,
 
-  /** Today's five tasks + a greeting. Always returns a usable day. */
+  /** Today's tasks + a greeting. The AI picks the count. Always usable. */
   async dailyTasks(args) {
     const json = await generateJson(prompts.dailyTasks(args), null);
     const tasks = normalizeTasks(json);

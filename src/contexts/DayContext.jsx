@@ -13,7 +13,7 @@ import { progressService } from "../services/progressService";
 import { rewardService } from "../services/rewardService";
 import { aiService } from "../gemini/aiService";
 import { todayKey, yesterdayKey } from "../utils/date";
-import { DAY_SUCCESS_THRESHOLD } from "../userContext";
+import { dayThreshold } from "../userContext";
 
 const DayContext = createContext(null);
 
@@ -159,12 +159,14 @@ export function DayProvider({ children }) {
   const derived = useMemo(() => {
     const completed = day?.completedCount ?? 0;
     const total = day?.totalCount ?? 0;
+    const threshold = dayThreshold(total);
     return {
       completed,
       total,
+      threshold,
       remaining: Math.max(0, total - completed),
-      hitToday: completed >= DAY_SUCCESS_THRESHOLD,
-      toThreshold: Math.max(0, DAY_SUCCESS_THRESHOLD - completed),
+      hitToday: completed >= threshold,
+      toThreshold: Math.max(0, threshold - completed),
       pct: total ? Math.round((completed / total) * 100) : 0,
     };
   }, [day]);

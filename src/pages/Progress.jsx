@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Flame, Trophy, Check, X, CheckCircle2 } from "lucide-react";
 import { useDay } from "../contexts/DayContext";
 import { formatShortDate, todayKey } from "../utils/date";
-import { DAY_SUCCESS_THRESHOLD } from "../userContext";
+import { DAY_SUCCESS_RATIO } from "../userContext";
 import CalendarMonth from "../components/CalendarMonth";
 
 function Stat({ icon: Icon, label, value, tone }) {
@@ -87,7 +87,8 @@ export default function Progress() {
           />
         </div>
         <p className="mt-2.5 text-xs text-muted">
-          A day counts when you finish {DAY_SUCCESS_THRESHOLD} of 5.
+          A day counts when you finish at least {Math.round(DAY_SUCCESS_RATIO * 100)}% of
+          that day's tasks.
         </p>
       </section>
 

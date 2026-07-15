@@ -6,7 +6,7 @@
  *   npm run verify:appwrite  audits the live project against it
  *   npm run schema           prints a build checklist from it
  *
- * The app is deliberately small: one document per day holding that day's five
+ * The app is deliberately small: one document per day holding that day's
  * tasks, a running progress document, and a log of rewards earned.
  *
  * Conventions:
@@ -33,7 +33,7 @@ export const SCHEMA = [
     id: "days",
     name: "Days",
     purpose:
-      "One document per day. Holds the five tasks the AI assigned, their completion state, and the AI's end-of-day verdict.",
+      "One document per day. Holds the tasks the AI assigned, their completion state, and the AI's end-of-day verdict.",
     attributes: [
       owner,
       str("dateKey", 10, "one doc per day — the app upserts on this"),

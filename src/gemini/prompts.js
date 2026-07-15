@@ -1,12 +1,12 @@
 /**
  * Every prompt the app sends. Three jobs, nothing more:
- *   1. dailyTasks  — hand over today's five tasks
+ *   1. dailyTasks  — hand over today's tasks (the AI picks how many)
  *   2. reward      — pay out for a finished task, sized to what it was worth
  *   3. verdict     — judge yesterday: praise, or guilt
  *
  * All three are built from the same persona + the user's own context file.
  */
-import { ME, TASKS_PER_DAY, DAY_SUCCESS_THRESHOLD } from "../userContext";
+import { ME, TARGET_TASKS, MIN_TASKS, MAX_TASKS, dayThreshold } from "../userContext";
 
 const TONE = {
   gentle:
@@ -55,7 +55,7 @@ Tasks finished all-time: ${progress.tasksCompleted}`;
 
 export const prompts = {
   /**
-   * Today's five tasks. `history` is the last few days: [{ dateKey, status,
+   * Today's tasks. `history` is the last few days: [{ dateKey, status,
    * completedCount, totalCount, titles }].
    */
   dailyTasks({ progress, history = [], today }) {
@@ -79,7 +79,13 @@ ${recent}
 
 Today is ${today}.
 
-Assign exactly ${TASKS_PER_DAY} tasks for today. Rules:
+YOU decide how many tasks to assign — whatever the day actually needs. Aim for
+around ${TARGET_TASKS}, but never fewer than ${MIN_TASKS} or more than ${MAX_TASKS}.
+Give fewer on a hard day, right after a slip, or when they're rebuilding momentum;
+give more when they're on a streak and clearly have capacity. Don't pad to hit a
+number — every task must earn its place.
+
+Rules:
 
 - Each must be doable TODAY, in one sitting, and finishable. No "work on X" — say
   exactly what done looks like.
@@ -165,7 +171,8 @@ Return JSON:
    * The morning verdict on YESTERDAY. This is where praise or guilt lands.
    */
   verdict({ day, progress, today }) {
-    const hit = day.completedCount >= DAY_SUCCESS_THRESHOLD;
+    const threshold = dayThreshold(day.totalCount);
+    const hit = day.completedCount >= threshold;
     const undone = (day.tasks || []).filter((t) => !t.completed).map((t) => t.title);
 
     return {
@@ -175,7 +182,7 @@ Return JSON:
 ${record(progress)}
 
 YESTERDAY (${day.dateKey}) they finished ${day.completedCount} of ${day.totalCount} tasks.
-The bar for a day to count is ${DAY_SUCCESS_THRESHOLD}. They ${hit ? "MET it" : "MISSED it"}.
+The bar for that day to count was ${threshold}. They ${hit ? "MET it" : "MISSED it"}.
 ${undone.length ? `Left undone:\n${undone.map((t) => `- ${t}`).join("\n")}` : "They finished everything."}
 
 Today is ${today}.

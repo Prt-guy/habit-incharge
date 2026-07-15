@@ -1,6 +1,6 @@
 import { db, Query, parseJson, toJson } from "../appwrite/db";
 import { OWNER_ID } from "../appwrite/config";
-import { DAY_SUCCESS_THRESHOLD } from "../userContext";
+import { dayThreshold } from "../userContext";
 
 function decorate(doc) {
   if (!doc) return null;
@@ -98,7 +98,7 @@ export const dayService = {
   async evaluate(day) {
     if (day.status !== "pending") return { day, hit: day.status === "done" };
 
-    const hit = day.completedCount >= DAY_SUCCESS_THRESHOLD;
+    const hit = day.completedCount >= dayThreshold(day.totalCount);
     const updated = await db.update("days", day.$id, {
       status: hit ? "done" : "missed",
     });

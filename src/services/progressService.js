@@ -52,7 +52,7 @@ export const progressService = {
   /**
    * Fold a finished day into the running totals.
    *
-   * `hit` is whether the day cleared DAY_SUCCESS_THRESHOLD. A hit extends the
+   * `hit` is whether the day cleared its threshold (dayThreshold). A hit extends the
    * streak; a miss resets it to zero — that reset is the whole point of the
    * streak, so it is deliberately unforgiving.
    *

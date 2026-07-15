@@ -18,7 +18,7 @@ export const ME = {
 
   /** One line. Who are you right now, honestly? */
   whoIAm:
-    "I am a troubled individual who ha lost his identity to a relationship. the relationship is great but i want to be more than that. I want to build habits.",
+    "I am a troubled 21 year old individual who ha lost his identity to a relationship. the relationship is great but i want to be more than that. I want to build habits.",
 
   /**
    * What you're actually chasing. Be concrete — deadlines, numbers, names.
@@ -31,7 +31,7 @@ export const ME = {
     "I am learning deployement from a 5.5 hours long video. a little bit everyday",
     "i want to start waking up early, like 6am or 6.30am. and also get to bed early. basically i want to build healthy sleeping schedule",
     "i work at dseu university as a front end develepor, my working hours are 9.30-5.30 and it takes 45 minutes for me to reach the office from home and vice versa.  workind days are monday to friday",
-    "i am also in a relationship with a beatuful girlfriend and lately i have been upsetting her alot so i want to do stuff for her here and there. not everyday, just something once or twice a week to get back on track",
+    "i am also in a relationship with a beatuful girlfriend and lately i have been upsetting her alot so i want to do stuff for her here and there. not everyday, just something once or twice a week to get back on track. i dont live with her btw, we are still with our parents.",
     "i also want to focus on myself, i want to journal everyday so that i dont feel overwhelmed with stuff that is inside.",
   ],
 
@@ -72,12 +72,24 @@ export const ME = {
   tone: "honest",
 };
 
-/** How many tasks the AI hands you each morning. */
-export const TASKS_PER_DAY = 5;
+/**
+ * The AI decides how many tasks to hand you each morning — a light day to
+ * rebuild momentum after a slip, a fuller one when you've got room. TARGET is
+ * just the number it aims for; MIN/MAX are the hard limits it can't cross.
+ */
+export const TARGET_TASKS = 5;
+export const MIN_TASKS = 3;
+export const MAX_TASKS = 7;
 
 /**
- * How many of the day's tasks you must finish for the day to count as DONE.
- * Anything less and the day is logged as MISSED — that's what the streak and
- * the guilt are built on. Set it somewhere you'd actually respect.
+ * A day counts as DONE when you finish this FRACTION of that day's tasks.
+ * A ratio (not a fixed count) keeps the bar fair no matter how many tasks the
+ * AI assigned — 60% of 3 is 2, 60% of 6 is 4. This is what the streak and the
+ * guilt are built on.
  */
-export const DAY_SUCCESS_THRESHOLD = 3;
+export const DAY_SUCCESS_RATIO = 0.6;
+
+/** How many tasks must be finished for a day of `total` tasks to count. */
+export function dayThreshold(total) {
+  return Math.max(1, Math.ceil((total || 0) * DAY_SUCCESS_RATIO));
+}

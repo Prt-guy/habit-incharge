@@ -2,12 +2,12 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Flame, Quote, Sparkles, AlertTriangle } from "lucide-react";
 import { useDay } from "../contexts/DayContext";
-import { ME, DAY_SUCCESS_THRESHOLD } from "../userContext";
+import { ME } from "../userContext";
 import { greeting, formatLongDate } from "../utils/date";
 import TaskItem from "../components/TaskItem";
 
 /** Circular day progress with a small dot marking the threshold to clear. */
-function Ring({ completed, total, hit }) {
+function Ring({ completed, total, threshold, hit }) {
   const size = 116;
   const stroke = 11;
   const r = (size - stroke) / 2;
@@ -16,7 +16,7 @@ function Ring({ completed, total, hit }) {
   const color = hit ? "var(--color-secondary)" : "var(--color-primary)";
 
   // where the "day counts" threshold sits on the circle
-  const tFrac = total ? DAY_SUCCESS_THRESHOLD / total : 0;
+  const tFrac = total ? threshold / total : 0;
   const tAngle = -Math.PI / 2 + tFrac * 2 * Math.PI;
   const tx = size / 2 + r * Math.cos(tAngle);
   const ty = size / 2 + r * Math.sin(tAngle);
@@ -85,6 +85,7 @@ export default function Today() {
     completeTask,
     completed,
     total,
+    threshold,
     hitToday,
     toThreshold,
   } = useDay();
@@ -128,7 +129,7 @@ export default function Today() {
 
       {/* Hero: ring + streak */}
       <section className="flex items-center gap-5 rounded-[2rem] border border-line bg-card p-5 shadow-soft md:gap-7 md:p-6">
-        <Ring completed={completed} total={total} hit={hitToday} />
+        <Ring completed={completed} total={total} threshold={threshold} hit={hitToday} />
         <div className="min-w-0">
           <div className="flex items-center gap-2.5">
             <span className="grid h-10 w-10 place-items-center rounded-full bg-accent-soft">
@@ -188,10 +189,10 @@ export default function Today() {
         </section>
       )}
 
-      {/* The five */}
+      {/* Today's tasks */}
       <section className="space-y-3">
         <p className="px-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
-          Today's five
+          Today's {total || ""} {total === 1 ? "task" : "tasks"}
         </p>
         {(day?.tasks || []).map((task, i) => (
           <TaskItem
