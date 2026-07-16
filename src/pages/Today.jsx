@@ -29,7 +29,7 @@ function Ring({ completed, total, threshold, hit }) {
           cy={size / 2}
           r={r}
           fill="none"
-          stroke="rgba(245,239,230,0.08)"
+          stroke="rgba(255,255,255,0.08)"
           strokeWidth={stroke}
         />
         <motion.circle

@@ -1,66 +1,61 @@
 @import "tailwindcss";
 
 /*
- * Azure and white on a cool dark base. One brand color, used with conviction,
- * plus white as the second voice — brighter cards and glow than a typical
- * "dark mode" so it reads as alive, not gloomy. Serif headlines, circles and
- * full-round corners are the recurring shape.
+ * Flat, minimal, azure. One brand color used with conviction, on a solid dark
+ * base — no gradients, no glow, no fixed background. Depth comes from three
+ * flat card steps and hairline borders, not shadows. Fully-round corners and
+ * circles are the recurring shape; serif headlines carry the voice.
  */
 @theme {
-  --color-bg: #0a0d13;
-  --color-card: #12161f;
-  --color-card-2: #1b212c;
-  --color-card-3: #252d3a;
-  --color-line: rgba(255, 255, 255, 0.09);
-  --color-line-strong: rgba(255, 255, 255, 0.18);
+  --color-bg: #0f1218;
+  --color-card: #171b24;
+  --color-card-2: #1e2430;
+  --color-card-3: #29313f;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.16);
 
-  /* azure — the whole brand */
-  --color-primary: #007fff;
-  --color-primary-strong: #1a8cff;
-  --color-primary-soft: rgba(0, 127, 255, 0.18);
+  /* azure — the whole brand, solid */
+  --color-primary: #0a84ff;
+  --color-primary-strong: #339dff;
+  --color-primary-soft: rgba(10, 132, 255, 0.16);
 
   /* bright sky — "done", success, a lighter step of the same blue */
   --color-secondary: #4fb2ff;
-  --color-secondary-soft: rgba(79, 178, 255, 0.18);
+  --color-secondary-soft: rgba(79, 178, 255, 0.16);
 
   /* white, used as a real color — weight, celebration, the epic tier */
   --color-accent: #ffffff;
-  --color-accent-soft: rgba(255, 255, 255, 0.14);
+  --color-accent-soft: rgba(255, 255, 255, 0.12);
 
   /* steel blue — the quiet third tone, for rarer stats */
   --color-lilac: #7fa8d9;
-  --color-lilac-soft: rgba(127, 168, 217, 0.16);
+  --color-lilac-soft: rgba(127, 168, 217, 0.14);
 
   /* clean red — misses. the one place blue can't carry the meaning */
-  --color-danger: #ff4d5e;
-  --color-danger-soft: rgba(255, 77, 94, 0.16);
+  --color-danger: #ff5266;
+  --color-danger-soft: rgba(255, 82, 102, 0.14);
 
-  --color-ink: #f5f9ff;
-  --color-ink-2: #c6d1e0;
-  --color-muted: #8592a3;
-  --color-faint: #4d5866;
+  --color-ink: #f4f7fb;
+  --color-ink-2: #c2cddc;
+  --color-muted: #828e9f;
+  --color-faint: #4b5563;
 
   --font-sans: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
 
-  --shadow-soft: 0 10px 32px rgba(0, 0, 0, 0.4);
-  --shadow-float: 0 14px 44px rgba(0, 20, 45, 0.5);
+  /* soft, neutral, no color cast — depth without glow */
+  --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.3);
+  --shadow-float: 0 10px 30px rgba(0, 0, 0, 0.38);
 }
 
 html {
   color-scheme: dark;
 }
 
+/* Solid, flat base — no radial gradients, no fixed attachment (both were the
+   biggest scroll-repaint / jank culprits). */
 body {
   @apply bg-bg text-ink font-sans antialiased;
-  background-image: radial-gradient(
-      ellipse 70% 45% at 12% -10%,
-      rgba(0, 127, 255, 0.22),
-      transparent
-    ),
-    radial-gradient(ellipse 55% 40% at 100% 10%, rgba(255, 255, 255, 0.06), transparent),
-    radial-gradient(ellipse 60% 45% at 85% 110%, rgba(0, 127, 255, 0.12), transparent);
-  background-attachment: fixed;
 }
 
 /* Serif headlines */
@@ -104,9 +99,21 @@ body {
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0.04) 25%,
-    rgba(255, 255, 255, 0.09) 37%,
+    rgba(255, 255, 255, 0.08) 37%,
     rgba(255, 255, 255, 0.04) 63%
   );
   background-size: 400px 100%;
   animation: shimmer 1.4s ease infinite;
+}
+
+/* Respect users who ask for less motion — kills the residual jitter entirely. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

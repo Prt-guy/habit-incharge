@@ -26,13 +26,14 @@ export const ME = {
    */
   goals: [
     "I want to make a routine which i do everyday that consist of healthy habits.",
-    "I do home workouts, the push pull leg split with no equipments just bodyweight stuff 6 times a week",
+    "I do home workouts, the push pull leg split with no equipments just bodyweight stuff 6 times a week. monday - push, tuesday - pull, wednesday - leg and repeat. and sunday is the rest day.",
     "i am trying to read meditations by marcus aurellius. i want to built a habit to read everyday",
-    "I am learning deployement from a 5.5 hours long video. a little bit everyday",
+    "I am learning deployement from a 5.5 hours long video. a little bit everyday, i also dont wanna be limited to that, i want also learn something new with it. like i dont know backend very well i wanna learn it.",
     "i want to start waking up early, like 6am or 6.30am. and also get to bed early. basically i want to build healthy sleeping schedule",
-    "i work at dseu university as a front end develepor, my working hours are 9.30-5.30 and it takes 45 minutes for me to reach the office from home and vice versa.  workind days are monday to friday",
-    "i am also in a relationship with a beatuful girlfriend and lately i have been upsetting her alot so i want to do stuff for her here and there. not everyday, just something once or twice a week to get back on track. i dont live with her btw, we are still with our parents.",
+    "i work at dseu university as a front end develepor, my working hours are 9.30-5.30 and it takes 45 minutes for me to reach the office from home and vice versa.  working days are monday to friday",
+    "i am also in a relationship with a beatiful girlfriend and lately i have been upsetting her alot so i want to do stuff for her here and there. not everyday, just something once or twice a week to get back on track. i dont live with her btw, we are still with our parents.",
     "i also want to focus on myself, i want to journal everyday so that i dont feel overwhelmed with stuff that is inside.",
+    "i also wanna make a instagram page where i would post something i learnt regularly, like a quote or a new thing about life etc. Wont show my face but will learn it.",
   ],
 
   /**
@@ -41,7 +42,7 @@ export const ME = {
    * put here, the better they get.
    */
   iLike: [
-    "I like to watch youtube video, kingwoolsgames, football videos, gaming videos and other cool stuff",
+    "I like to watch youtube video, self help videos, space facts, gaming streams, football videos, gaming videos and other cool stuff",
     "I dont game regularly but i want to, cant find a time for it, i want to batman arkham games from start to end.",
     "i'd like to go outside for a 30 mins walk with bhanu or nikhil( my friends) or sometimes alone when they are not free",
     "watching a good movie once a week, mostly on saturdays and sundays, other days, i'd be working",

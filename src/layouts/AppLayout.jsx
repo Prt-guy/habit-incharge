@@ -20,7 +20,7 @@ function PillNav() {
       className="fixed inset-x-0 bottom-5 z-40 flex justify-center md:bottom-auto md:top-6"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
-      <div className="flex items-center gap-1 rounded-full border border-line bg-card/90 p-1.5 shadow-float backdrop-blur-xl">
+      <div className="flex items-center gap-1 rounded-full border border-line bg-card p-1.5 shadow-float">
         {TABS.map((tab) => (
           <NavLink key={tab.to} to={tab.to} end={tab.to === "/"}>
             {({ isActive }) => (

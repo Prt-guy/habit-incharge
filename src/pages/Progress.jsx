@@ -80,7 +80,7 @@ export default function Progress() {
         </div>
         <div className="h-3 w-full overflow-hidden rounded-full bg-ink/8">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-secondary/80 to-secondary"
+            className="h-full rounded-full bg-secondary"
             initial={{ width: 0 }}
             animate={{ width: `${rate}%` }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}

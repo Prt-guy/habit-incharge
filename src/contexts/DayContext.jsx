@@ -14,14 +14,29 @@ import { rewardService } from "../services/rewardService";
 import { aiService } from "../gemini/aiService";
 import { todayKey, yesterdayKey } from "../utils/date";
 import { dayThreshold } from "../userContext";
+import { readCache, writeCache } from "../utils/cache";
 
 const DayContext = createContext(null);
 
+/**
+ * Last known snapshot from localStorage — but only if it's still *today's*.
+ * A snapshot from yesterday must not be shown as today, so in that case we
+ * fall back to the skeleton and let boot() generate the new day.
+ */
+function loadSnapshot() {
+  const cached = readCache("snapshot");
+  return cached && cached.day?.dateKey === todayKey() ? cached : null;
+}
+
 export function DayProvider({ children }) {
-  const [day, setDay] = useState(null);
-  const [progress, setProgress] = useState(null);
-  const [history, setHistory] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Read once. If it's fresh, the UI paints instantly and boot() reconciles
+  // in the background instead of blocking behind Appwrite + the Gemini boot.
+  const [snapshot] = useState(loadSnapshot);
+
+  const [day, setDay] = useState(snapshot?.day ?? null);
+  const [progress, setProgress] = useState(snapshot?.progress ?? null);
+  const [history, setHistory] = useState(snapshot?.history ?? []);
+  const [loading, setLoading] = useState(!snapshot);
   const [error, setError] = useState(null);
   const [reward, setReward] = useState(null); // the reward overlay's payload
   const booted = useRef(false);
@@ -101,10 +116,23 @@ export function DayProvider({ children }) {
     booted.current = true;
     boot().catch((err) => {
       console.error("[boot]", err);
-      setError(err?.message || "Something went wrong loading today.");
       setLoading(false);
+      // Don't wipe a good cached view just because a background refresh failed.
+      if (!snapshot) setError(err?.message || "Something went wrong loading today.");
     });
-  }, [boot]);
+  }, [boot, snapshot]);
+
+  /**
+   * Persist the working snapshot on every change, so the next reload paints
+   * from it. This is the whole "cache memory, fetch only on change" story:
+   * navigating tabs never re-fetches (state lives here), and a reload shows
+   * the cached day at once while boot() quietly brings it up to date.
+   */
+  useEffect(() => {
+    if (day && day.dateKey === todayKey()) {
+      writeCache("snapshot", { day, progress, history });
+    }
+  }, [day, progress, history]);
 
   /** Finish a task: persist it, ask the AI for a reward, show it. */
   const completeTask = useCallback(

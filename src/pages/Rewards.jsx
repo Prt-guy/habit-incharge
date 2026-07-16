@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Gift } from "lucide-react";
 import { rewardService } from "../services/rewardService";
 import { formatShortDate } from "../utils/date";
+import { readCache } from "../utils/cache";
 
 const TIERS = {
   small: { label: "Small", emoji: "🎁", color: "var(--color-lilac)" },
@@ -12,10 +13,12 @@ const TIERS = {
 };
 
 export default function Rewards() {
-  const [rewards, setRewards] = useState(null);
+  // Paint from cache immediately (no skeleton flash on revisits); listCached
+  // only touches the network the first time, then stays warm.
+  const [rewards, setRewards] = useState(() => readCache("rewards"));
 
   useEffect(() => {
-    rewardService.list(80).then(setRewards);
+    rewardService.listCached(80).then(setRewards);
   }, []);
 
   return (

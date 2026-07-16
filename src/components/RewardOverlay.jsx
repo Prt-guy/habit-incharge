@@ -6,7 +6,7 @@ import { burstConfetti, levelUpConfetti } from "../utils/confetti";
 /** How loud the payout looks scales with what the task was worth. */
 const TIERS = {
   small: { label: "Small win", emoji: "🎁", hex: "#7FA8D9" },
-  solid: { label: "Solid", emoji: "🎉", hex: "#007FFF" },
+  solid: { label: "Solid", emoji: "🎉", hex: "#0A84FF" },
   big: { label: "Big one", emoji: "🔥", hex: "#4FB2FF" },
   epic: { label: "Epic", emoji: "⚡", hex: "#FFFFFF" },
 };
@@ -29,14 +29,8 @@ function Panel({ reward, onClose }) {
       className="fixed inset-0 z-[90] grid place-items-center p-5"
     >
       <div
-        className="absolute inset-0 bg-black/85 backdrop-blur-md"
+        className="absolute inset-0 bg-black/88"
         onClick={opened ? onClose : undefined}
-      />
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background: `radial-gradient(circle at 50% 42%, ${tier.hex}55, transparent 62%)`,
-        }}
       />
 
       <div className="relative z-10 w-full max-w-sm">
@@ -57,7 +51,7 @@ function Panel({ reward, onClose }) {
                 animate={{ y: [0, -10, 0] }}
                 transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
                 className="grid h-44 w-44 place-items-center rounded-full shadow-float"
-                style={{ background: `radial-gradient(circle at 32% 28%, ${tier.hex}, #12161F 130%)` }}
+                style={{ backgroundColor: tier.hex }}
               >
                 <Gift size={64} className="text-bg" strokeWidth={1.8} />
               </motion.button>

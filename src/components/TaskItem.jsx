@@ -24,13 +24,12 @@ export default function TaskItem({ task, onComplete, busy, index }) {
 
   return (
     <motion.div
-      layout
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, type: "spring", stiffness: 300, damping: 28 }}
+      transition={{ delay: Math.min(index * 0.04, 0.2), duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "flex items-start gap-4 rounded-[1.75rem] border border-line p-4 pl-5 transition-colors md:p-5",
-        done ? "bg-card/40" : "bg-card"
+        done ? "bg-card-2" : "bg-card"
       )}
     >
       <div className="min-w-0 flex-1 pt-0.5">
