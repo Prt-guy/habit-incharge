@@ -9,7 +9,7 @@ import CalendarMonth from "../components/CalendarMonth";
 function Stat({ icon: Icon, label, value, tone }) {
   const tones = {
     peach: "bg-primary-soft text-primary",
-    sage: "bg-secondary-soft text-secondary",
+    sage: "bg-secondary-soft text-on-lime",
     honey: "bg-accent-soft text-accent",
     clay: "bg-danger-soft text-danger",
     lilac: "bg-lilac-soft text-lilac",
@@ -120,7 +120,7 @@ export default function Progress() {
               <span
                 className={`grid h-9 w-9 place-items-center rounded-full ${
                   selectedDay.status === "done"
-                    ? "bg-secondary-soft text-secondary"
+                    ? "bg-secondary-soft text-on-lime"
                     : selectedDay.status === "missed"
                       ? "bg-danger-soft text-danger"
                       : "bg-primary-soft text-primary"
@@ -140,7 +140,7 @@ export default function Progress() {
                 <div key={t.id} className="flex items-center gap-2.5 rounded-full bg-card px-3.5 py-2">
                   <span
                     className={`grid h-5 w-5 shrink-0 place-items-center rounded-full ${
-                      t.completed ? "bg-secondary text-bg" : "bg-ink/10 text-transparent"
+                      t.completed ? "bg-secondary text-on-lime" : "bg-ink/10 text-transparent"
                     }`}
                   >
                     <Check size={12} strokeWidth={3} />
@@ -179,7 +179,7 @@ export default function Progress() {
                 <span
                   className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${
                     d.status === "done"
-                      ? "bg-secondary-soft text-secondary"
+                      ? "bg-secondary-soft text-on-lime"
                       : d.status === "missed"
                         ? "bg-danger-soft text-danger"
                         : "bg-primary-soft text-primary"

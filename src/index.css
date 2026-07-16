@@ -1,55 +1,58 @@
 @import "tailwindcss";
 
 /*
- * Flat, minimal, azure. One brand color used with conviction, on a solid dark
- * base — no gradients, no glow, no fixed background. Depth comes from three
- * flat card steps and hairline borders, not shadows. Fully-round corners and
- * circles are the recurring shape; serif headlines carry the voice.
+ * Light, minimal, solid. A soft grey page under flat white cards with big
+ * rounded corners and hairline borders — no gradients, no glow. Three solid
+ * accents do all the work: cobalt blue (brand / in-progress), lime green
+ * (done / success), and near-black ink (weight, the epic tier, text). Bold
+ * sans headings; fully-round corners and circles are the recurring shape.
  */
 @theme {
-  --color-bg: #0f1218;
-  --color-card: #171b24;
-  --color-card-2: #1e2430;
-  --color-card-3: #29313f;
-  --color-line: rgba(255, 255, 255, 0.08);
-  --color-line-strong: rgba(255, 255, 255, 0.16);
+  --color-bg: #f4f5f7;
+  --color-card: #ffffff;
+  --color-card-2: #eef1f4;
+  --color-card-3: #e3e7ec;
+  --color-line: rgba(17, 24, 39, 0.08);
+  --color-line-strong: rgba(17, 24, 39, 0.14);
 
-  /* azure — the whole brand, solid */
-  --color-primary: #0a84ff;
-  --color-primary-strong: #339dff;
-  --color-primary-soft: rgba(10, 132, 255, 0.16);
+  /* cobalt — the brand */
+  --color-primary: #2563eb;
+  --color-primary-strong: #1d4ed8;
+  --color-primary-soft: rgba(37, 99, 235, 0.1);
 
-  /* bright sky — "done", success, a lighter step of the same blue */
-  --color-secondary: #4fb2ff;
-  --color-secondary-soft: rgba(79, 178, 255, 0.16);
+  /* lime — "done", success */
+  --color-secondary: #a3e635;
+  --color-secondary-strong: #84cc16;
+  --color-secondary-soft: rgba(132, 204, 22, 0.16);
+  --color-on-lime: #1a2e05; /* text/icons that sit on a lime fill */
 
-  /* white, used as a real color — weight, celebration, the epic tier */
-  --color-accent: #ffffff;
-  --color-accent-soft: rgba(255, 255, 255, 0.12);
+  /* near-black, used as a real color — weight, celebration, the epic tier */
+  --color-accent: #111827;
+  --color-accent-soft: rgba(17, 24, 39, 0.06);
 
-  /* steel blue — the quiet third tone, for rarer stats */
-  --color-lilac: #7fa8d9;
-  --color-lilac-soft: rgba(127, 168, 217, 0.14);
+  /* slate — the quiet third tone, for rarer stats */
+  --color-lilac: #64748b;
+  --color-lilac-soft: rgba(100, 116, 139, 0.12);
 
-  /* clean red — misses. the one place blue can't carry the meaning */
-  --color-danger: #ff5266;
-  --color-danger-soft: rgba(255, 82, 102, 0.14);
+  /* clean red — misses. the one place the others can't carry the meaning */
+  --color-danger: #ef4444;
+  --color-danger-soft: rgba(239, 68, 68, 0.1);
 
-  --color-ink: #f4f7fb;
-  --color-ink-2: #c2cddc;
-  --color-muted: #828e9f;
-  --color-faint: #4b5563;
+  --color-ink: #111827;
+  --color-ink-2: #3f4653;
+  --color-muted: #6b7280;
+  --color-faint: #9aa3af;
 
   --font-sans: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-serif: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  /* soft, neutral, no color cast — depth without glow */
-  --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.3);
-  --shadow-float: 0 10px 30px rgba(0, 0, 0, 0.38);
+  /* soft, neutral — depth without glow, tuned for a light surface */
+  --shadow-soft: 0 4px 16px rgba(17, 24, 39, 0.06);
+  --shadow-float: 0 10px 30px rgba(17, 24, 39, 0.12);
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 /* Solid, flat base — no radial gradients, no fixed attachment (both were the
@@ -58,23 +61,28 @@ body {
   @apply bg-bg text-ink font-sans antialiased;
 }
 
-/* Serif headlines */
+/*
+ * Display headings. The class is named `font-serif` for historic reasons, but
+ * it now renders bold, tight sans to match the reference. Unlayered, so it
+ * wins over Tailwind's `font-medium` on the same element.
+ */
 .font-serif {
-  font-family: var(--font-serif);
-  font-optical-sizing: auto;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
 /* Recessive scrollbars */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #2a3341 transparent;
+  scrollbar-color: #cbd2db transparent;
 }
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 *::-webkit-scrollbar-thumb {
-  background: #2a3341;
+  background: #cbd2db;
   border-radius: 8px;
 }
 *::-webkit-scrollbar-track {
@@ -98,9 +106,9 @@ body {
 .skeleton {
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.04) 25%,
-    rgba(255, 255, 255, 0.08) 37%,
-    rgba(255, 255, 255, 0.04) 63%
+    rgba(17, 24, 39, 0.05) 25%,
+    rgba(17, 24, 39, 0.09) 37%,
+    rgba(17, 24, 39, 0.05) 63%
   );
   background-size: 400px 100%;
   animation: shimmer 1.4s ease infinite;

@@ -8,7 +8,7 @@ import { readCache } from "../utils/cache";
 const TIERS = {
   small: { label: "Small", emoji: "🎁", color: "var(--color-lilac)" },
   solid: { label: "Solid", emoji: "🎉", color: "var(--color-primary)" },
-  big: { label: "Big", emoji: "🔥", color: "var(--color-secondary)" },
+  big: { label: "Big", emoji: "🔥", color: "#4d7c0f" },
   epic: { label: "Epic", emoji: "⚡", color: "var(--color-accent)" },
 };
 

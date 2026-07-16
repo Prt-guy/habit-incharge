@@ -49,7 +49,7 @@ export default function TaskItem({ task, onComplete, busy, index }) {
         <div className="mt-3 flex items-center gap-2.5">
           <Weight value={task.weight} />
           {done && task.reward && (
-            <span className="truncate text-xs font-medium text-secondary">
+            <span className="truncate text-xs font-semibold text-on-lime">
               🎁 {task.reward.title}
             </span>
           )}
@@ -64,8 +64,8 @@ export default function TaskItem({ task, onComplete, busy, index }) {
           // a full circle, thumb-sized
           "grid h-12 w-12 shrink-0 place-items-center rounded-full border-2 transition-all active:scale-90",
           done
-            ? "border-secondary bg-secondary text-bg"
-            : "border-line-strong text-transparent hover:border-secondary/60 active:border-secondary"
+            ? "border-secondary bg-secondary text-on-lime"
+            : "border-line-strong text-transparent hover:border-secondary active:border-secondary"
         )}
       >
         {busy ? (

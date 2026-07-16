@@ -53,7 +53,7 @@ export default function CalendarMonth({ byDay, selected, onSelect }) {
       <div className="mb-4 flex items-center justify-between">
         <button
           onClick={goPrev}
-          className="grid h-9 w-9 place-items-center rounded-full text-muted transition-colors hover:bg-white/5 hover:text-ink active:scale-90"
+          className="grid h-9 w-9 place-items-center rounded-full text-muted transition-colors hover:bg-black/5 hover:text-ink active:scale-90"
           aria-label="Previous month"
         >
           <ChevronLeft size={18} />
@@ -62,7 +62,7 @@ export default function CalendarMonth({ byDay, selected, onSelect }) {
         <button
           onClick={goNext}
           disabled={isCurrentMonth}
-          className="grid h-9 w-9 place-items-center rounded-full text-muted transition-colors hover:bg-white/5 hover:text-ink active:scale-90 disabled:pointer-events-none disabled:opacity-25"
+          className="grid h-9 w-9 place-items-center rounded-full text-muted transition-colors hover:bg-black/5 hover:text-ink active:scale-90 disabled:pointer-events-none disabled:opacity-25"
           aria-label="Next month"
         >
           <ChevronRight size={18} />
@@ -88,11 +88,11 @@ export default function CalendarMonth({ byDay, selected, onSelect }) {
               const isSelected = key === selected;
               const tappable = Boolean(d) && !isFuture;
 
-              let cls = "bg-white/[0.04] text-muted";
-              if (d?.status === "done") cls = "bg-secondary text-bg";
-              else if (d?.status === "missed") cls = "bg-danger/85 text-white";
-              else if (d?.status === "pending") cls = "bg-primary/55 text-white";
-              if (isFuture) cls = "bg-transparent text-faint/40";
+              let cls = "bg-accent-soft text-muted";
+              if (d?.status === "done") cls = "bg-secondary text-on-lime";
+              else if (d?.status === "missed") cls = "bg-danger text-white";
+              else if (d?.status === "pending") cls = "bg-primary text-white";
+              if (isFuture) cls = "bg-transparent text-faint/50";
 
               return (
                 <button
@@ -123,10 +123,10 @@ export default function CalendarMonth({ byDay, selected, onSelect }) {
           <span className="h-2.5 w-2.5 rounded-full bg-secondary" /> Done
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-danger/85" /> Missed
+          <span className="h-2.5 w-2.5 rounded-full bg-danger" /> Missed
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-primary/55" /> In progress
+          <span className="h-2.5 w-2.5 rounded-full bg-primary" /> In progress
         </span>
       </div>
     </div>

@@ -3,12 +3,17 @@ import { useState } from "react";
 import { Gift, X } from "lucide-react";
 import { burstConfetti, levelUpConfetti } from "../utils/confetti";
 
-/** How loud the payout looks scales with what the task was worth. */
+/**
+ * How loud the payout looks scales with what the task was worth.
+ *   hex — the solid fill (orb, button)
+ *   on  — text/icon that sits on that fill
+ *   ink — a readable version of the color for text on a white card
+ */
 const TIERS = {
-  small: { label: "Small win", emoji: "🎁", hex: "#7FA8D9" },
-  solid: { label: "Solid", emoji: "🎉", hex: "#0A84FF" },
-  big: { label: "Big one", emoji: "🔥", hex: "#4FB2FF" },
-  epic: { label: "Epic", emoji: "⚡", hex: "#FFFFFF" },
+  small: { label: "Small win", emoji: "🎁", hex: "#64748b", on: "#ffffff", ink: "#475569" },
+  solid: { label: "Solid", emoji: "🎉", hex: "#2563eb", on: "#ffffff", ink: "#1d4ed8" },
+  big: { label: "Big one", emoji: "🔥", hex: "#a3e635", on: "#1a2e05", ink: "#4d7c0f" },
+  epic: { label: "Epic", emoji: "⚡", hex: "#111827", on: "#ffffff", ink: "#111827" },
 };
 
 function Panel({ reward, onClose }) {
@@ -29,7 +34,7 @@ function Panel({ reward, onClose }) {
       className="fixed inset-0 z-[90] grid place-items-center p-5"
     >
       <div
-        className="absolute inset-0 bg-black/88"
+        className="absolute inset-0 bg-ink/60"
         onClick={opened ? onClose : undefined}
       />
 
@@ -42,7 +47,7 @@ function Panel({ reward, onClose }) {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.4, opacity: 0 }}
               transition={{ type: "spring", stiffness: 260, damping: 20 }}
-              className="flex flex-col items-center text-center"
+              className="flex flex-col items-center rounded-[2rem] bg-card px-8 py-10 text-center shadow-float"
             >
               {/* a full circle — tap to open */}
               <motion.button
@@ -53,15 +58,15 @@ function Panel({ reward, onClose }) {
                 className="grid h-44 w-44 place-items-center rounded-full shadow-float"
                 style={{ backgroundColor: tier.hex }}
               >
-                <Gift size={64} className="text-bg" strokeWidth={1.8} />
+                <Gift size={64} strokeWidth={1.8} style={{ color: tier.on }} />
               </motion.button>
               <p
                 className="mt-8 text-[11px] font-bold uppercase tracking-[0.22em]"
-                style={{ color: tier.hex }}
+                style={{ color: tier.ink }}
               >
                 {tier.label}
               </p>
-              <h2 className="mt-2 font-serif text-3xl font-medium italic text-ink">
+              <h2 className="mt-2 font-serif text-3xl italic text-ink">
                 You earned it
               </h2>
               <p className="mt-2 text-sm text-muted">Tap to open</p>
@@ -94,7 +99,7 @@ function Panel({ reward, onClose }) {
                 </motion.span>
                 <p
                   className="mt-3 text-[10px] font-bold uppercase tracking-[0.22em]"
-                  style={{ color: tier.hex }}
+                  style={{ color: tier.ink }}
                 >
                   {tier.label} · weight {reward.task?.weight}/5
                 </p>
@@ -123,8 +128,8 @@ function Panel({ reward, onClose }) {
 
               <button
                 onClick={onClose}
-                className="mt-5 w-full rounded-full py-3.5 font-semibold text-bg transition-transform active:scale-[0.98]"
-                style={{ backgroundColor: tier.hex }}
+                className="mt-5 w-full rounded-full py-3.5 font-semibold transition-transform active:scale-[0.98]"
+                style={{ backgroundColor: tier.hex, color: tier.on }}
               >
                 Back to it
               </button>

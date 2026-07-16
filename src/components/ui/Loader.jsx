@@ -17,7 +17,7 @@ export function PageLoader({ label = "Getting your day…" }) {
       <div className="flex flex-col items-center gap-5">
         {/* three breathing circles — the app's shape, doing its thing */}
         <div className="flex items-center gap-2">
-          {["#0A84FF", "#4FB2FF", "#FFFFFF"].map((c, i) => (
+          {["#2563eb", "#a3e635", "#111827"].map((c, i) => (
             <motion.span
               key={c}
               className="h-3.5 w-3.5 rounded-full"

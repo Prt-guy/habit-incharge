@@ -31,7 +31,8 @@
       "Bash(node -e ' *)",
       "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:5173/\" -UseBasicParsing -TimeoutSec 3; Write-Output \"dev server: $\\($r.StatusCode\\)\" } catch { Write-Output \"dev server not running\" })",
       "PowerShell(node _inspect.mjs)",
-      "PowerShell(node _inspect2.mjs)"
+      "PowerShell(node _inspect2.mjs)",
+      "Bash(python -)"
     ]
   }
 }
