@@ -20,7 +20,8 @@ function pick(arr) {
  */
 const fallback = {
   dailyTasks() {
-    const goals = ME.goals.length ? ME.goals : ["Make progress on something that matters"];
+    const allGoals = [...(ME.goals.daily || []), ...(ME.goals.occasional || [])];
+    const goals = allGoals.length ? allGoals : ["Make progress on something that matters"];
     return {
       greeting: "No AI today, so here's a plain list. Do them anyway.",
       tasks: Array.from({ length: TARGET_TASKS }, (_, i) => ({

@@ -33,8 +33,14 @@ Name: ${ME.name}
 Self-description: ${ME.whoIAm}
 Their day: ${ME.myDay}
 
-WHAT THEY'RE CHASING
-${ME.goals.map((g) => `- ${g}`).join("\n")}
+WHAT THEY'RE CHASING — DAILY (should show up most days; each carries its own weekly
+structure where stated, e.g. which workout falls on which weekday — respect it exactly)
+${ME.goals.daily.map((g) => `- ${g}`).join("\n")}
+
+WHAT THEY'RE CHASING — OCCASIONAL (their own cadence is stated in the text, e.g. "once
+or twice a week" — NOT daily. Check THE LAST FEW DAYS below: if it hasn't shown up
+within its stated cadence, it's due today. Never let one disappear for weeks.)
+${ME.goals.occasional.map((g) => `- ${g}`).join("\n")}
 
 WHAT THEY ENJOY (raw material for rewards — use it, be specific, reference actual titles)
 ${ME.iLike.map((l) => `- ${l}`).join("\n")}
@@ -68,6 +74,10 @@ export const prompts = {
           .join("\n")
       : "(nothing yet — this is their first day)";
 
+    const weekday = new Date(`${today}T00:00:00`).toLocaleDateString("en-US", {
+      weekday: "long",
+    });
+
     return {
       system: PERSONA,
       prompt: `${aboutThem()}
@@ -77,19 +87,44 @@ ${record(progress)}
 THE LAST FEW DAYS
 ${recent}
 
-Today is ${today}.
+Today is ${weekday}, ${today}.
 
 YOU decide how many tasks to assign — whatever the day actually needs. Aim for
 around ${TARGET_TASKS}, but never fewer than ${MIN_TASKS} or more than ${MAX_TASKS}.
-Give fewer on a hard day, right after a slip, or when they're rebuilding momentum;
-give more when they're on a streak and clearly have capacity. Don't pad to hit a
-number — every task must earn its place.
+Work out the count from these, in order:
+
+1. Capacity for ${weekday}. Monday-Friday they're at work 9:30-5:30 plus a 45-min
+   commute each way — tasks have to fit around that, so lean toward the lower half
+   of the range and keep each one quick. Saturday and Sunday they have the whole day
+   free — capacity for more tasks, or fewer but heavier ones. Sunday is also their
+   workout rest day, so keep it lighter overall: no workout task, more room for
+   occasional goals, learning, or just recovery.
+2. Momentum. Fewer on a hard day, right after a slip, or while rebuilding; more when
+   they're on a streak and clearly have room for it.
+3. Coverage (below). If an occasional goal is due, that's a real task and can push
+   the count up — but never past ${MAX_TASKS}, and never as padding.
+
+Don't pad to hit a number — every task must earn its place.
+
+COVERAGE — go through this before finalizing the list:
+- Daily goals: on a normal day, most of them should have a task. If one is skipped,
+  it should be for a real reason (rest day, genuinely no capacity today), not neglect.
+- Occasional goals: read the cadence stated in each one (e.g. "once or twice a week").
+  Scan THE LAST FEW DAYS above — if a goal hasn't appeared within its own stated
+  cadence, include it today regardless of what else is planned. If none are due,
+  leave them out; don't force one in early.
+- Never let any goal — daily or occasional — go absent for longer than its own
+  cadence implies. That silent drop is the failure mode to design against.
 
 Rules:
 
 - Each must be doable TODAY, in one sitting, and finishable. No "work on X" — say
   exactly what done looks like.
 - Push their actual goals forward. Not busywork, not self-care filler.
+- Some of their daily goals name a fixed weekly structure (which workout falls on
+  which weekday). Today is ${weekday} — check every such recurring commitment against
+  THAT weekday specifically before writing tasks, and get it right. Never guess or
+  default to the wrong day's version of a recurring task.
 - Vary the weight. Include at least one that is genuinely hard (weight 4-5) and one
   small win (weight 1-2) so a bad day still has a foothold.
 - Do NOT repeat a task they've already been given in the last few days unless they

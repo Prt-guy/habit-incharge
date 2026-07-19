@@ -23,18 +23,27 @@ export const ME = {
   /**
    * What you're actually chasing. Be concrete — deadlines, numbers, names.
    * These drive what tasks you get.
+   *
+   * Split into `daily` (things that should show up most days) and
+   * `occasional` (things with their own slower cadence — say the cadence
+   * IN the text, e.g. "once or twice a week", so the AI can track it against
+   * recent history instead of either spamming it daily or forgetting it for
+   * weeks).
    */
-  goals: [
-    "I want to make a routine which i do everyday that consist of healthy habits.",
-    "I do home workouts, the push pull leg split with no equipments just bodyweight stuff 6 times a week. monday - push, tuesday - pull, wednesday - leg and repeat. and sunday is the rest day.",
-    "i am trying to read meditations by marcus aurellius. i want to built a habit to read everyday",
-    "I am learning deployement from a 5.5 hours long video. a little bit everyday, i also dont wanna be limited to that, i want also learn something new with it. like i dont know backend very well i wanna learn it.",
-    "i want to start waking up early, like 6am or 6.30am. and also get to bed early. basically i want to build healthy sleeping schedule",
-    "i work at dseu university as a front end develepor, my working hours are 9.30-5.30 and it takes 45 minutes for me to reach the office from home and vice versa.  working days are monday to friday",
-    "i am also in a relationship with a beatiful girlfriend and lately i have been upsetting her alot so i want to do stuff for her here and there. not everyday, just something once or twice a week to get back on track. i dont live with her btw, we are still with our parents.",
-    "i also want to focus on myself, i want to journal everyday so that i dont feel overwhelmed with stuff that is inside.",
-    "i also wanna make a instagram page where i would post something i learnt regularly, like a quote or a new thing about life etc. Wont show my face but will learn it.",
-  ],
+  goals: {
+    daily: [
+      "I want to make a routine which i do everyday that consist of healthy habits.",
+      "I do home workouts, the push pull leg split with no equipments just bodyweight stuff 6 times a week: monday - push, tuesday - pull, wednesday - legs, thursday - push, friday - pull, saturday - legs. sunday is the rest day.",
+      "i am trying to read meditations by marcus aurellius. i want to built a habit to read everyday",
+      "I am learning deployement from a 5.5 hours long video. a little bit everyday, i also dont wanna be limited to that, i want also learn something new with it. like i dont know backend very well i wanna learn it.",
+      "i want to start waking up early, like 6am or 6.30am. and also get to bed early. basically i want to build healthy sleeping schedule",
+      "i also want to focus on myself, i want to journal everyday so that i dont feel overwhelmed with stuff that is inside.",
+    ],
+    occasional: [
+      "i am also in a relationship with a beatiful girlfriend and lately i have been upsetting her alot so i want to do stuff for her here and there. not everyday, just something once or twice a week to get back on track. i dont live with her btw, we are still with our parents.",
+      "i also wanna make a instagram page where i would post something i learnt regularly, like a quote or a new thing about life etc, a few times a week rather than daily. Wont show my face but will learn it.",
+    ],
+  },
 
   /**
    * What you do with free time, and what you actually enjoy. This is the raw
@@ -62,7 +71,7 @@ export const ME = {
 
   /** Roughly how your day is shaped. Keeps tasks realistic. */
   myDay:
-    "Early mornings. 9.30-5.30pm work. saturdays and sundays off. a cute girlfriend. two friends to hangout with.",
+    "Early mornings. Work monday-friday as a front end developer at dseu university, 9.30-5.30, plus 45 minutes commute each way. Saturdays and sundays off work. a cute girlfriend. two friends to hangout with.",
 
   /**
    * How hard should the AI be on you when you slip?
